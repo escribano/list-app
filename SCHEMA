@@ -1,0 +1,47 @@
+USERS
+ user_id PK | username TEXT | email TEXT | hash TEXT | salt TEXT
+------------+---------------+------------+-----------+----------
+CREATE TABLE users(user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                   username TEXT,
+                   email TEXT,
+                   hash TEXT,
+                   salt TEXT);
+
+TASKS
+ task_id PK | task_owner FK->USERS(id) | task_text TEXT | date_created TIME
+------------+--------------------------+----------------+------------------
+CREATE TABLE tasks(task_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                   task_owner INTEGER,
+                   task_text TEXT,
+                   date_created INTEGER,
+                   FOREIGN KEY(task_owner) REFERENCES users(user_id)
+                       ON DELETE CASCADE);
+
+TAGMAP
+ tagmap_id PK | task_id FK->TASKS(task_id) | tag_id FK->TAGS(tag_id)
+--------------+----------------------------+------------------------
+CREATE TABLE tagmap(tagmap_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    task_id INTEGER,
+                    tag_id INTEGER,
+                    FOREIGN KEY(task_id) REFERENCES tasks(task_id)
+                        ON DELETE CASCADE,
+                    FOREIGN KEY(tag_id) REFERENCES tags(tag_id)
+                        ON DELETE CASCADE);
+
+TAGS
+ tag_id PK | tag_text TEXT
+-----------+--------------
+CREATE TABLE tags(tag_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                  tag_text TEXT);
+
+COLOR
+ user_id PK FK->USERS(user_id) | tag_id PK FK->TAGS(tag_id) | color text
+-------------------------------+----------------------------+-----------
+CREATE TABLE colors(user_id INTEGER,
+                    tag_id INTEGER,
+                    color TEXT,
+                    PRIMARY KEY(user_id, tag_id),
+                    FOREIGN KEY(tag_id) REFERENCES tags(tag_id)
+                        ON DELETE CASCADE,
+                    FOREIGN KEY(user_id) REFERENCES users(user_id)
+                        ON DELETE CASCADE);
