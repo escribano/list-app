@@ -5,7 +5,7 @@ import (
 	//"github.com/gorilla/mux"
 	//"github.com/gorilla/rpc"
 	//"github.com/gorilla/rpc/json"
-	"github.com/gorilla/schema"
+	//"github.com/gorilla/schema"
 	//"github.com/gorilla/sessions"
 	"crypto/sha512"
 	//"crypto/rand"
@@ -13,22 +13,6 @@ import (
 	"fmt"
 	//"net/http"
 )
-
-type CreateAccountForm struct {
-	FirstName string
-	LastName  string
-	Username  string
-	Email     string
-	Password  string
-}
-
-type LoginForm struct {
-	Username   string
-	Password   string
-	RememberMe bool
-}
-
-var decoder = schema.NewDecoder()
 
 func NewPass(password string) ([]byte, []byte) {
 	// make user salt and hash of pass and put into database
