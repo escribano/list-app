@@ -1,7 +1,7 @@
 USERS
  user_id PK | username TEXT | email TEXT | hash TEXT | salt TEXT
 ------------+---------------+------------+-----------+----------
-CREATE TABLE users(user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+CREATE TABLE users(user_id BIGINT PRIMARY KEY AUTOINCREMENT,
                    username TEXT,
                    email TEXT,
                    hash TEXT,
@@ -10,7 +10,7 @@ CREATE TABLE users(user_id INTEGER PRIMARY KEY AUTOINCREMENT,
 TASKS
  task_id PK | task_owner FK->USERS(id) | task_text TEXT | date_created TIME
 ------------+--------------------------+----------------+------------------
-CREATE TABLE tasks(task_id INTEGER PRIMARY KEY AUTOINCREMENT,
+CREATE TABLE tasks(task_id BIGINT PRIMARY KEY AUTOINCREMENT,
                    task_owner INTEGER,
                    task_text TEXT,
                    date_created INTEGER,
@@ -20,7 +20,7 @@ CREATE TABLE tasks(task_id INTEGER PRIMARY KEY AUTOINCREMENT,
 TAGMAP
  tagmap_id PK | task_id FK->TASKS(task_id) | tag_id FK->TAGS(tag_id)
 --------------+----------------------------+------------------------
-CREATE TABLE tagmap(tagmap_id INTEGER PRIMARY KEY AUTOINCREMENT,
+CREATE TABLE tagmap(tagmap_id BIGINT PRIMARY KEY AUTOINCREMENT,
                     task_id INTEGER,
                     tag_id INTEGER,
                     FOREIGN KEY(task_id) REFERENCES tasks(task_id)
@@ -31,17 +31,261 @@ CREATE TABLE tagmap(tagmap_id INTEGER PRIMARY KEY AUTOINCREMENT,
 TAGS
  tag_id PK | tag_text TEXT
 -----------+--------------
-CREATE TABLE tags(tag_id INTEGER PRIMARY KEY AUTOINCREMENT,
+CREATE TABLE tags(tag_id BIGINT PRIMARY KEY AUTOINCREMENT,
                   tag_text TEXT);
 
 COLOR
  user_id PK FK->USERS(user_id) | tag_id PK FK->TAGS(tag_id) | color text
 -------------------------------+----------------------------+-----------
-CREATE TABLE colors(user_id INTEGER,
-                    tag_id INTEGER,
+CREATE TABLE colors(user_id BIGINT,
+                    tag_id BIGINT,
                     color TEXT,
                     PRIMARY KEY(user_id, tag_id),
                     FOREIGN KEY(tag_id) REFERENCES tags(tag_id)
                         ON DELETE CASCADE,
                     FOREIGN KEY(user_id) REFERENCES users(user_id)
                         ON DELETE CASCADE);
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner:
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner:
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+--
+-- Name: autoincrement; Type: SEQUENCE; Schema: public; Owner: list_app_user
+--
+
+CREATE SEQUENCE autoincrement
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.autoincrement OWNER TO list_app_user;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: colors; Type: TABLE; Schema: public; Owner: list_app_user; Tablespace:
+--
+
+CREATE TABLE colors (
+    user_id bigint NOT NULL,
+    tag_id bigint NOT NULL,
+    color character varying(7)
+);
+
+
+ALTER TABLE public.colors OWNER TO list_app_user;
+
+--
+-- Name: tagmap; Type: TABLE; Schema: public; Owner: list_app_user; Tablespace:
+--
+
+CREATE TABLE tagmap (
+    tagmat_id bigint DEFAULT nextval('autoincrement'::regclass) NOT NULL,
+    task_id bigint NOT NULL,
+    tag_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.tagmap OWNER TO list_app_user;
+
+--
+-- Name: tags; Type: TABLE; Schema: public; Owner: list_app_user; Tablespace:
+--
+
+CREATE TABLE tags (
+    tag_id bigint DEFAULT nextval('autoincrement'::regclass) NOT NULL,
+    tag_text text
+);
+
+
+ALTER TABLE public.tags OWNER TO list_app_user;
+
+--
+-- Name: tasks; Type: TABLE; Schema: public; Owner: list_app_user; Tablespace:
+--
+
+CREATE TABLE tasks (
+    task_id bigint DEFAULT nextval('autoincrement'::regclass) NOT NULL,
+    task_owner integer NOT NULL,
+    task_text text,
+    date_created timestamp with time zone
+);
+
+
+ALTER TABLE public.tasks OWNER TO list_app_user;
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: list_app_user; Tablespace:
+--
+
+CREATE TABLE users (
+    user_id bigint DEFAULT nextval('autoincrement'::regclass) NOT NULL,
+    email character varying(64) NOT NULL,
+    hash character varying(88) NOT NULL,
+    salt character varying(24) NOT NULL
+);
+
+
+ALTER TABLE public.users OWNER TO list_app_user;
+
+--
+-- Name: colors_pkey; Type: CONSTRAINT; Schema: public; Owner: list_app_user; Tablespace:
+--
+
+ALTER TABLE ONLY colors
+    ADD CONSTRAINT colors_pkey PRIMARY KEY (user_id, tag_id);
+
+
+--
+-- Name: tagmap_pkey; Type: CONSTRAINT; Schema: public; Owner: list_app_user; Tablespace:
+--
+
+ALTER TABLE ONLY tagmap
+    ADD CONSTRAINT tagmap_pkey PRIMARY KEY (tagmat_id);
+
+
+--
+-- Name: tagmap_tag_id_key; Type: CONSTRAINT; Schema: public; Owner: list_app_user; Tablespace:
+--
+
+ALTER TABLE ONLY tagmap
+    ADD CONSTRAINT tagmap_tag_id_key UNIQUE (tag_id);
+
+
+--
+-- Name: tagmap_task_id_key; Type: CONSTRAINT; Schema: public; Owner: list_app_user; Tablespace:
+--
+
+ALTER TABLE ONLY tagmap
+    ADD CONSTRAINT tagmap_task_id_key UNIQUE (task_id);
+
+
+--
+-- Name: tags_pkey; Type: CONSTRAINT; Schema: public; Owner: list_app_user; Tablespace:
+--
+
+ALTER TABLE ONLY tags
+    ADD CONSTRAINT tags_pkey PRIMARY KEY (tag_id);
+
+
+--
+-- Name: tasks_pkey; Type: CONSTRAINT; Schema: public; Owner: list_app_user; Tablespace:
+--
+
+ALTER TABLE ONLY tasks
+    ADD CONSTRAINT tasks_pkey PRIMARY KEY (task_id);
+
+
+--
+-- Name: tasks_task_owner_key; Type: CONSTRAINT; Schema: public; Owner: list_app_user; Tablespace:
+--
+
+ALTER TABLE ONLY tasks
+    ADD CONSTRAINT tasks_task_owner_key UNIQUE (task_owner);
+
+
+--
+-- Name: users_email_key; Type: CONSTRAINT; Schema: public; Owner: list_app_user; Tablespace:
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_email_key UNIQUE (email);
+
+
+--
+-- Name: users_hash_key; Type: CONSTRAINT; Schema: public; Owner: list_app_user; Tablespace:
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_hash_key UNIQUE (hash);
+
+
+--
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: list_app_user; Tablespace:
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (user_id);
+
+
+--
+-- Name: colors_tag_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: list_app_user
+--
+
+ALTER TABLE ONLY colors
+    ADD CONSTRAINT colors_tag_id_fkey FOREIGN KEY (tag_id) REFERENCES tags(tag_id) ON DELETE CASCADE;
+
+
+--
+-- Name: colors_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: list_app_user
+--
+
+ALTER TABLE ONLY colors
+    ADD CONSTRAINT colors_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE;
+
+
+--
+-- Name: tagmap_tag_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: list_app_user
+--
+
+ALTER TABLE ONLY tagmap
+    ADD CONSTRAINT tagmap_tag_id_fkey FOREIGN KEY (tag_id) REFERENCES tags(tag_id) ON DELETE CASCADE;
+
+
+--
+-- Name: tagmap_task_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: list_app_user
+--
+
+ALTER TABLE ONLY tagmap
+    ADD CONSTRAINT tagmap_task_id_fkey FOREIGN KEY (task_id) REFERENCES tasks(task_id) ON DELETE CASCADE;
+
+
+--
+-- Name: tasks_task_owner_fkey; Type: FK CONSTRAINT; Schema: public; Owner: list_app_user
+--
+
+ALTER TABLE ONLY tasks
+    ADD CONSTRAINT tasks_task_owner_fkey FOREIGN KEY (task_owner) REFERENCES users(user_id) ON DELETE CASCADE;
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
