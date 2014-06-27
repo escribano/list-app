@@ -8,10 +8,10 @@ import (
 	"github.com/gorilla/schema"
 	//"github.com/gorilla/sessions"
 	"crypto/sha512"
-	"crypto/rand"
+	//"crypto/rand"
 	"code.google.com/p/go.crypto/pbkdf2"
 	"fmt"
-	"net/http"
+	//"net/http"
 )
 
 type CreateAccountForm struct {
@@ -30,39 +30,6 @@ type LoginForm struct {
 
 var decoder = schema.NewDecoder()
 
-func LoginHandler(res http.ResponseWriter, req *http.Request) {
-	login := new(LoginForm)
-
-	err := req.ParseForm()
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	err = decoder.Decode(login, req.PostForm)
-	if err != nil {
-		fmt.Println(err)
-	}
-	//call AuthPass
-	fmt.Println(login)
-}
-
-func NewAccountHandler(res http.ResponseWriter, req *http.Request) {
-	newUser := new(CreateAccountForm)
-
-	err := req.ParseForm()
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	err = decoder.Decode(newUser, req.PostForm)
-	if err != nil {
-		fmt.Println(err)
-	}
-	//call NewPass
-
-	fmt.Println(newUser)
-}
-
 func NewPass(password string) ([]byte, []byte) {
 	// make user salt and hash of pass and put into database
 	// for salt may want to have seperate database that stores all salts ever made
@@ -77,12 +44,12 @@ func NewPass(password string) ([]byte, []byte) {
 	return pbkdf2.Key([]byte(password), salt, 4096, 64, sha512.New), salt
 }
 
-
 func AuthPass(password, user string) bool {
 	// pull user's salt and password from database
 	userSalt := []byte("fixed_test_salts")
 	//hash potential input password
-	passHash := pbkdf2.Key([]byte(login.Password), userSalt, 4096, 64, sha512.New)
+	passHash := pbkdf2.Key([]byte(user), userSalt, 4096, 64, sha512.New)
 	// compare passHash to the hash in the database, if match login is correct(true), if not login failed(false).
+	fmt.Println(passHash)
 	return true
 }
