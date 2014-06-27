@@ -18,11 +18,27 @@ import (
 var store = sessions.NewCookieStore([]byte("something-secret"))
 
 func main() {
-	conn, err := sql.Open("postgres", "user=list_app_user dbname=list_app  sslmode=verifyfull")
+	connString := "postgres://" + DBUser + ":" + DBPass + "@localhost/" + DBName + "?sslmode=disable"
+	db, err := sql.Open("postgres", connString)
+	defer db.Close()
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Connection error: ", err)
 	}
-	fmt.Println(conn)
+
+	rows, err := db.Query("SELECT * FROM tags;")
+	defer rows.Close()
+	if err != nil {
+		fmt.Println("Query error: ", err)
+	}
+
+	for rows.Next() {
+		var pk int
+		var tag string
+		if err := rows.Scan(&pk, &tag); err != nil {
+			fmt.Println("Row error: ", err)
+		}
+		fmt.Printf("IN row: %s %s\n", pk, tag)
+	}
 
 	router := mux.NewRouter()
 	InitHttpHandlers(router)
