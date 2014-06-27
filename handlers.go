@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func IndexHandler(res http.ResponseWriter, req *http.Request) {
+func Index(res http.ResponseWriter, req *http.Request) {
 	// login := new(LoginForm)
 
 	// err := req.ParseForm()
@@ -25,12 +25,16 @@ func IndexHandler(res http.ResponseWriter, req *http.Request) {
 	fmt.Fprint(res, string(body))
 }
 
-func NewAccountHandler(res http.ResponseWriter, req *http.Request) {
+func GetNewAccount(res http.ResponseWriter, req *http.Request) {
 	body, _ := ioutil.ReadFile("templates/new-account.html")
 	fmt.Fprint(res, string(body))
 }
 
-func LoginHandler(res http.ResponseWriter, req *http.Request) {
+func GetLogin(res http.ResponseWriter, req *http.Request) {
 	body, _ := ioutil.ReadFile("templates/login.html")
 	fmt.Fprint(res, string(body))
+}
+
+func PostLogin(res http.ResponseWriter, req *http.Request) {
+
 }

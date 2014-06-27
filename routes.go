@@ -8,9 +8,9 @@ import (
 
 func InitHttpHandlers(router *mux.Router) {
 	routes := map[string]http.HandlerFunc{
-		"/":           IndexHandler,
-		"/login":      LoginHandler,
-		"/newaccount": NewAccountHandler,
+		"/":           Index,
+		"/login":      GetLogin,
+		"/newaccount": GetNewAccount,
 	}
 
 	// Serve static directory
