@@ -14,7 +14,7 @@ import (
 
 type CreateAccountForm struct {
 	FirstName string
-	LastName  String
+	LastName  string
 	Username  string
 	Email     string
 	Password  string
@@ -44,7 +44,7 @@ func LoginHandler(res http.ResponseWriter, req *http.Request) {
 	fmt.Println(login)
 }
 
-func NewAccountHandler(res http.RequestWriter, req *http.Request) {
+func NewAccountHandler(res http.ResponseWriter, req *http.Request) {
 	newUser := new(CreateAccountForm)
 
 	err := req.ParseForm()
