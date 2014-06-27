@@ -11,20 +11,6 @@ import (
 var decoder = schema.NewDecoder()
 
 func Index(res http.ResponseWriter, req *http.Request) {
-	// login := new(LoginForm)
-
-	// err := req.ParseForm()
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
-
-	// err = decoder.Decode(login, req.PostForm)
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
-	// //call AuthPass
-	// fmt.Println(login)
-
 	body, _ := ioutil.ReadFile("templates/index.html")
 	fmt.Fprint(res, string(body))
 }
@@ -49,6 +35,9 @@ func PostNewAccount(res http.ResponseWriter, req *http.Request) {
 	var hash, salt string
 	if newUser.Password == newUser.Password2 {
 		hash, salt = NewPass(newUser.Password)
+	} else {
+		// PASSWORD DONT MATCH YO
+		// Set a flash message and return form data except passwords?
 	}
 
 	queryString := fmt.Sprintf(`INSERT INTO users (first_name, last_name, email, hash, salt) VALUES ("%s", "%s", "%s", E"%s", E"%s");`,
