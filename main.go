@@ -16,16 +16,23 @@ import (
 	"net/http"
 )
 
-var DB *sql.DB
-var Store *sessions.CookieStore = sessions.NewCookieStore([]byte("SUPER SECRET"))
+var (
+	DB     *sql.DB
+	DBName = "cool_db"
+	DBUser = "cool_db_user"
+	DBPass = "cool_passwrd!"
+
+	Store *sessions.CookieStore = sessions.NewCookieStore([]byte("SUPER SECRET"))
+)
 
 func main() {
 	connString := "postgres://" + DBUser + ":" + DBPass + "@localhost/" + DBName + "?sslmode=disable"
 	DB, err := sql.Open("postgres", connString)
-	defer DB.Close()
 	if err != nil {
 		fmt.Println("Connection error: ", err)
 	}
+	defer DB.Close()
+	fmt.Println(DB)
 
 	// rows, err := DB.Query("SELECT * FROM tags;")
 	// defer rows.Close()
