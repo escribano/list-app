@@ -6,13 +6,32 @@ import (
 	"github.com/gorilla/mux"
 )
 
+func base(res http.ResponseWriter, req *http.Request) {}
+
 func InitHttpHandlers(router *mux.Router) {
 	routes := map[string]http.HandlerFunc{
-		"/":            Index,
-		"/login":       GetLogin,
-		"/logout":      Index,
-		"/register":    GetNewAccount,
-		"/create/user": PostNewAccount,
+		// Static file routes
+		"/":         Index,
+		"/login":    GetLogin,
+		"/logout":   Index,
+		"/register": GetNewAccount,
+
+		// Routes related to users
+		"/user/create": base,
+		"/user/delete": base,
+		"/user/update": base,
+
+		// Routes related to tags
+		"/tag/add": base,
+
+		// Routes related to tasks
+		"/task/create":          base,
+		"/task/delete":          base,
+		"/task/update/tags":     base,
+		"/task/update/text":     base,
+		"/task/update/deadline": base,
+		"/task/get/all":         base,
+		"/task/get/{id:[0-9]+}": base,
 	}
 
 	// Serve static directory
