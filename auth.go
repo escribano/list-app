@@ -66,9 +66,9 @@ func AuthPass(user, password string) bool {
 	// if the hashes are same size iterate through, if any dont match up set a bool to false
 	// at end of matching check bool value.
 	match := true
-	for i := 0; i < length(userHash); i++ {
+	for i := 0; i < len(userHash); i++ {
 		if userHash[i] != passHash[i] {
-			match := false
+			match = false
 		}
 	}
 	return match

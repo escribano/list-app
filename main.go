@@ -10,13 +10,14 @@ import (
 	//"github.com/gorilla/schema"
 	"github.com/gorilla/sessions"
 
+	//"crypto/rand"
 	"database/sql"
 	"fmt"
 	"net/http"
 )
 
 var DB *sql.DB
-var store = sessions.NewCookieStore([]byte("something-secret"))
+var Store *sessions.CookieStore = sessions.NewCookieStore([]byte("SUPER SECRET"))
 
 func main() {
 	connString := "postgres://" + DBUser + ":" + DBPass + "@localhost/" + DBName + "?sslmode=disable"
@@ -26,20 +27,20 @@ func main() {
 		fmt.Println("Connection error: ", err)
 	}
 
-	rows, err := DB.Query("SELECT * FROM tags;")
-	defer rows.Close()
-	if err != nil {
-		fmt.Println("Query error: ", err)
-	}
+	// rows, err := DB.Query("SELECT * FROM tags;")
+	// defer rows.Close()
+	// if err != nil {
+	// 	fmt.Println("Query error: ", err)
+	// }
 
-	for rows.Next() {
-		var pk int
-		var tag string
-		if err := rows.Scan(&pk, &tag); err != nil {
-			fmt.Println("Row error: ", err)
-		}
-		fmt.Printf("IN row: %s %s\n", pk, tag)
-	}
+	// for rows.Next() {
+	// 	var pk int
+	// 	var tag string
+	// 	if err := rows.Scan(&pk, &tag); err != nil {
+	// 		fmt.Println("Row error: ", err)
+	// 	}
+	// 	fmt.Printf("IN row: %s %s\n", pk, tag)
+	// }
 
 	router := mux.NewRouter()
 	InitHttpHandlers(router)
