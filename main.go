@@ -22,7 +22,7 @@ var (
 	DBUser = "cool_db_user"
 	DBPass = "cool_passwrd!"
 
-	Store *sessions.CookieStore = sessions.NewCookieStore([]byte("SUPER SECRET"))
+	Sessions *sessions.CookieStore = sessions.NewCookieStore([]byte("SUPER SECRET"))
 )
 
 func main() {
