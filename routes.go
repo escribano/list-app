@@ -17,9 +17,10 @@ func InitHttpHandlers(router *mux.Router) {
 		"/register": GetNewAccount,
 
 		// Routes related to users
-		"/user/create": base,
-		"/user/delete": base,
-		"/user/update": base,
+		"/user/create":       PostNewAccount,
+		"/user/delete":       base,
+		"/user/update":       base,
+		"/user/authenticate": PostLogin,
 
 		// Routes related to tags
 		"/tag/add": base,
