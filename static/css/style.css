@@ -253,33 +253,34 @@ form .text input{
 }
 .new_list_item{
 	list-style: none;
-	position: relative;
-	margin:0 20px;
-	padding-top: 20px;
+	position: relative !important;
+	margin:20px 0;
+	padding:40px 0 40px 0 !important; 
+
 }
 
-.new_task input{
-	width: 90%;
-	height: 40px;
-	border: solid 1px transparent;
-	padding-left: 10px;
+.new_list_item .new_task input{
+	width: 100%;
+	height: 60px;
+	border:none;
+	border-bottom: none;
+	padding:0 130px 0 10px;
 	margin-bottom: 5px;
-
-	font-size: 11pt;
-	background: #eee;
+	font-size: 20pt;
+	background: #f7f7f7;
 	box-shadow: 0 2px 2px rgba(0,0,0,.02) inset;
-	float:left;
+	position: absolute;
 }
 
 .add_butt button{
+	position: absolute;
 	border: solid 0px #000;
-	float:left;
-	width: 40px;
-	height: 40px;
-	margin-left: 0%;
+	width: 60px;
+	height: 60px;
 	background: #2bc65a;
-	font-size: 15pt;
+	font-size: 16pt;
 	color: white;
+	right: 60px;
 	transition:color .1s, background .2s;
 		-webkit-transition:color .1s, background .2s;
 		-moz-transition:color .1s, background .2s;
@@ -290,11 +291,31 @@ color: #fff;
 background: #25a84c;
 }
 
-.add_butt_grey button{
+.add_butt_group button{
+	position: absolute;
+	border: solid 0px #000;
+	width: 40px;
+	height: 40px;
+	background: #2bc65a;
+	font-size: 11pt;
+	color: white;
+	right: 10px;
+	transition:color .1s, background .2s;
+		-webkit-transition:color .1s, background .2s;
+		-moz-transition:color .1s, background .2s;
+}
+
+.add_butt_group button:hover{
+color: #fff;
+background: #25a84c;
+}
+
+
+.add_butt_grey input{
 	border: solid 0px #000;
 	float:left;
 	width: 40px;
-	height: 40px;
+	height: 35px;
 	margin-left: 0%;
 	background: #fff;
 	font-size: 15pt;
@@ -310,15 +331,16 @@ color: #2bc65a;
 
 .drop_butt button{
 	border: solid 0px #000;
-	float:left;
-	width: 40px;
-	height: 40px;
+	width: 60px;
+	height: 60px;
 	border-radius:0px 4px 4px 0px;
 	margin-left: ;
 	background: #2bc65a;
 	font-family: 'Lato';
 	font-size: 15pt;
 	color: white;
+	position: absolute;
+	right: 0;
 	transition:color .1s, background .2s;
 		-webkit-transition:color .1s, background .2s;
 		-moz-transition:color .1s, background .2s;
@@ -364,19 +386,27 @@ background: #BA1135;
 }
 
 .del_butt_grey button:hover{
-color: #D6133E;
-background: #eee;
+color: #f21800;
+background: #fff;
 }
+
+input.submit_check{
+   background: #888 !important;
+   border: none !important;
+   color: #000 !important;
+}
+
 
 /*---------- layout --------*/
 .sidebar{
 	width: 40%;
 	max-width: 300px;
 	padding: 0 10px;
-	background: #eee;
+	background: #fff;
 	height: 100vh;
 	position:fixed;
-	border-right: solid 2px #ddd;
+	border-right: solid 0px #288FEF;
+	box-shadow: 2px 0 30px #eee;
 }
 
 .list_tag{
@@ -414,6 +444,22 @@ background: #eee;
 
 }
 
+.sidebar img{
+	width: 100%;
+	padding: 30px 50px 0px 50px;
+}
+
+.sidebar #name{
+	color:#333;
+	font-size: 14pt;
+	text-align: center;
+}
+
+.sidebar h4{
+	color:#333;
+	margin-top: 20px;
+}
+
 .search input{
 	width: 100%;
 	margin: 10px 0;
@@ -427,13 +473,13 @@ background: #eee;
 }
 
 .new_group input{
-	width: 80%;
+	width: 100%;
 	height: 40px;
 	border: solid 1px transparent;
-	padding-left: 10px;
+	padding:0 50px 0 10px;
 	margin-bottom: 5px;
 	font-size: 11pt;
-	background: #fff;
+	background: #f7f7f7;
 	box-shadow: 0 2px 2px rgba(0,0,0,.02) inset;
 	float:left;
 }
@@ -454,12 +500,25 @@ background: #eee;
 	border: solid .5px #333;
 	padding-left:10px;
 	font-size: 11pt;
-	background: #fff;
+	background: #eee;
 	box-shadow: 0 2px 4px rgba(0,0,0,.05);
 
 }
 
 /*------ end sidebar ------*/
+
+/*-------type---------*/
+.title-edit input{
+	margin-left: 40px;
+	border: none;
+	background: none;
+	font-size: 20pt;
+	font-weight: 700;
+	color: #333;
+	margin-bottom: 10px;
+	width: 90%;
+}
+
 
 @media only screen and (max-width: 640px){
 	#login{
