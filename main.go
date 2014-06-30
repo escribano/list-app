@@ -7,19 +7,8 @@ import (
 
 	"github.com/gorilla/context"
 	"github.com/gorilla/mux"
-	//"github.com/gorilla/rpc"
-	//"github.com/gorilla/rpc/json"
-	//"github.com/gorilla/schema"
-	"github.com/gorilla/sessions"
 
-	//"crypto/rand"
-	//"database/sql"
-	//"fmt"
 	"net/http"
-)
-
-var (
-	Sessions *sessions.CookieStore = sessions.NewCookieStore([]byte("SUPER SECRET"))
 )
 
 func main() {
