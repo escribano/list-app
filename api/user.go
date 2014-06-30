@@ -16,6 +16,10 @@ type UserObject struct {
 // api function for creating a new user
 func CreateNewUser(email, first, last, hash, salt string) (err error) {
 	stmt, err := DB.Prepare("INSERT INTO users (email, first_name, last_name, hash, salt) VALUES ($1, $2, $3, $4, $5);")
+	if err != nil {
+		fmt.Println("ERROR preparing statement: ", err)
+		return err
+	}
 	results, err := stmt.Exec(email, first, last, hash, salt)
 	if err != nil {
 		fmt.Println("ERROR inserting new user: ", err)
