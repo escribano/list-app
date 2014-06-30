@@ -29,11 +29,11 @@ func InitHttpHandlers(router *mux.Router) {
 		// Routes related to tasks
 		"/task/create":          base,
 		"/task/delete":          base,
-		"/task/update/tags":     base, // Perhaps make one update routes and pass the relevant info in json
-		"/task/update/text":     base, // Update teh info for a task
-		"/task/update/deadline": base, // Set a dealine for a task
-		"/task/get/all":         base, // Default route to be used on login
-		"/task/get/{id:[0-9]+}": base, // This may not be a useful route.
+		"/task/update/tags":     base,                            // Perhaps make one update routes and pass the relevant info in json
+		"/task/update/text":     base,                            // Update teh info for a task
+		"/task/update/deadline": base,                            // Set a dealine for a task
+		"/task/get/all":         Use(GetUserTasks, RequireLogin), // Default route to be used on login
+		"/task/get/{id:[0-9]+}": base,                            // This may not be a useful route.
 	}
 
 	// Serve static directory
