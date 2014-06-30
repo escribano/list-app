@@ -10,7 +10,9 @@ import (
 	"net/http"
 )
 
-var decoder = schema.NewDecoder()
+var (
+	decoder = schema.NewDecoder()
+)
 
 // Get index.html form
 func Index(res http.ResponseWriter, req *http.Request) {
@@ -22,6 +24,12 @@ func Index(res http.ResponseWriter, req *http.Request) {
 // Get register.html form
 func GetNewAccount(res http.ResponseWriter, req *http.Request) {
 	body, _ := ioutil.ReadFile("templates/register.html")
+	fmt.Fprint(res, string(body))
+}
+
+// list-view.html page
+func GetListView(res http.ResponseWriter, req *http.Request) {
+	body, _ := ioutil.ReadFile("templates/list-view.html")
 	fmt.Fprint(res, string(body))
 }
 
