@@ -2,18 +2,23 @@ package main
 
 import (
 	//"github.com/gorilla/rpc"
-	//"github.com/gorilla/rpc/json"
+	//"github.com/gorilla/rpc/js
 	"github.com/gorilla/schema"
+	"github.com/gorilla/sessions"
 
 	"github.com/gaigepr/list-app/api"
 
+	//"crypto/rand"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 )
 
 var (
-	decoder = schema.NewDecoder()
+	hashKey  = []byte("a-very-secret-thing-omg")
+	blockKey = []byte("we-must-encrypt-all-of-the-thing")
+	store    = sessions.NewCookieStore([]byte(" buttmang"), []byte("12345678901234567890123456789012"))
+	decoder  = schema.NewDecoder()
 )
 
 // Get index.html form
@@ -74,9 +79,13 @@ func PostLogin(res http.ResponseWriter, req *http.Request) {
 
 	if err := req.ParseForm(); err != nil {
 		fmt.Println("ERROR parsing form: ", err)
+		fmt.Fprint(res, "<h1>500: Internal Server Error</h1>")
+		return
 	}
 	if err := decoder.Decode(user, req.PostForm); err != nil {
 		fmt.Println("ERROR decoding form: ", err)
+		fmt.Fprint(res, "<h1>500: Internal Server Error</h1>")
+		return
 	}
 
 	if err := user.Validate(); err != nil {
@@ -88,11 +97,11 @@ func PostLogin(res http.ResponseWriter, req *http.Request) {
 	userObj, err := api.GetUser(user.Email)
 	if err != nil {
 		fmt.Println("ERROR getting user: ", err)
+		fmt.Fprint(res, "<h1>500: Internal Server Error</h1>")
+		return
 	}
 
-	if AuthPass(user.Password, userObj.Hash, userObj.Salt) {
-		fmt.Fprint(res, "Success authenticating")
-	} else {
+	if !AuthPass(user.Password, userObj.Hash, userObj.Salt) {
 		fmt.Fprint(res, "Failed to authenticate")
 		return
 	}
@@ -100,18 +109,42 @@ func PostLogin(res http.ResponseWriter, req *http.Request) {
 	// Make a new session with a random string as the name.
 	// Save that string in the store or something so that none
 	// of that data is client side.
-	session, err := Sessions.Get(req, "session-name")
-	fmt.Println(session.Name())
+	session, err := store.Get(req, "list-app")
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("ERROR gettting session: ", err)
 	}
+	// generate and insert a unique and long session id
+	session.Values["sessionId"] = "FUCKING GEEZUZ"
 
 	if user.RememberMe {
-		// Set session for 14 days
-		//session.Options.MaxAge = 86400 * 14
-		session.Options.MaxAge = 60
+		session.Options.MaxAge = 120
 	} else {
 		session.Options.MaxAge = 30
 	}
-	session.Save(req, res)
+
+	if err := session.Save(req, res); err != nil {
+		fmt.Println("ERROR saving session: ", err)
+	}
+	fmt.Println("SAVED: ", session)
+	http.Redirect(res, req, "/task/get/all", 302)
+}
+
+// Handler for getting all a user's tasks; apart of post login screen
+func GetUserTasks(res http.ResponseWriter, req *http.Request) {
+	//api.GetAllUserTasks
+	session, err := store.Get(req, "list-app")
+	if err != nil {
+		fmt.Println("ERROR gettting session: ", err)
+	}
+	fmt.Println("OLD SESSION: ", session)
+}
+
+// Handler for creating a new task if a user is authed
+func PostNewTask(res http.ResponseWriter, req *http.Request) {
+	//api.CreateTask
+}
+
+// Handler for updating a task's data
+func PostUpdateTask(res http.ResponseWriter, req *http.Request) {
+	//api.CreateNewTag and others
 }
