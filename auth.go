@@ -29,34 +29,18 @@ func NewPass(password string) (string, string) {
 	return base64.StdEncoding.EncodeToString(pbkdf2.Key([]byte(password), salt, 4096, 64, sha512.New)), base64.StdEncoding.EncodeToString(salt)
 }
 
-func AuthPass(user, password string) bool {
-	// pull user's salt and password from database
-	rows, err := DB.Query("SELECT salt, hash FROM users WHERE user=" + user + ";")
-	defer rows.Close()
-	if err != nil {
-		fmt.Println("Query error: ", err)
-	}
-	if !rows.Next() {
-		fmt.Println("Error, no valid results returned")
-	}
-	var dbSalt string
-	var dbHash string
-	err = rows.Scan(&dbSalt, &dbHash)
-	if err != nil {
-		fmt.Println("Scanning error: ", err)
-	}
-
-	userSalt, err := base64.StdEncoding.DecodeString(dbSalt)
+func AuthPass(password, hash, salt string) bool {
+	userSalt, err := base64.StdEncoding.DecodeString(salt)
 	if err != nil {
 		fmt.Println("error de-base64-ing salt: ", err)
 	}
-	userHash, err := base64.StdEncoding.DecodeString(dbHash)
+	userHash, err := base64.StdEncoding.DecodeString(hash)
 	if err != nil {
 		fmt.Println("error de-base64-ing hash: ", err)
 	}
 
 	//hash potential input password
-	passHash := pbkdf2.Key([]byte(user), userSalt, 4096, 64, sha512.New)
+	passHash := pbkdf2.Key([]byte(password), userSalt, 4096, 64, sha512.New)
 
 	// compare passHash to the hash in the database,
 	// if match login is correct(true), if not login failed(false).
