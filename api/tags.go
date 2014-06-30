@@ -7,7 +7,7 @@ import (
 	"fmt"
 )
 
-func CreateNewTag(tag string) error {
+func CreateNewTag(tag string) (err error) {
 	stmt, err := DB.Prepare("INSERT INTO tags (tag_text) VALUES ($1);")
 	if err != nil {
 		fmt.Println("ERROR preparing statement: ", err)

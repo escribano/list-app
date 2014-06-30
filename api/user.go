@@ -25,7 +25,7 @@ func CreateNewUser(email, first, last, hash, salt string) (err error) {
 		fmt.Println("ERROR inserting new user: ", err)
 		return err
 	}
-	fmt.Println("Results: ", results)
+	fmt.Println(results)
 	return nil
 }
 
@@ -44,7 +44,6 @@ func GetUser(email string) (UserObject, error) {
 		fmt.Println("ERROR selecting all users: ", err)
 		return user, err
 	}
-	fmt.Println(user)
 	return user, nil
 }
 

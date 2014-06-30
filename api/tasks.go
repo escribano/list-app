@@ -57,6 +57,5 @@ func GetAllUserTasks(userId int) ([]TaskObject, error) {
 	if err := rows.Err(); err != nil {
 		fmt.Println("Row errorr?", err)
 	}
-	fmt.Println(tasks)
 	return tasks, nil
 }
