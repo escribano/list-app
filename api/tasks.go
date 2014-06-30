@@ -30,6 +30,7 @@ func CreateTask(text string, owner int) (err error) {
 		fmt.Println("ERROR inserting new task: ", err)
 		return err
 	}
+	fmt.Println(results)
 	return nil
 }
 
@@ -46,6 +47,7 @@ func DeleteTask(taskId int) (err error) {
 		fmt.Println("ERROR deleting task: ", err)
 		return err
 	}
+	fmt.Println(results)
 	return nil
 }
 
@@ -63,6 +65,7 @@ func UpdateTask(updatedTask TaskObject) (err error) {
 		fmt.Println("ERROR updating task: ", err)
 		return err
 	}
+	fmt.Println(results)
 	return nil
 }
 
