@@ -3,7 +3,7 @@ package api
 import (
 	_ "github.com/lib/pq"
 
-	//"database/sql"
+	"database/sql"
 	"fmt"
 	"time"
 )
@@ -58,4 +58,22 @@ func GetAllUserTasks(userId int) ([]TaskObject, error) {
 		fmt.Println("Row errorr?", err)
 	}
 	return tasks, nil
+}
+
+// verify that taskId is owned by taskOwner
+func VerifyTaskOwner(taskId, taskOwner int) bool {
+	stmt, err := DB.Prepare("Select task_id, task_owner From tasks where task_id = $1 AND task_owner = $2;")
+	if err != nil {
+		fmt.Println("ERROR preparing statement: ", err)
+	}
+	var dbId, dbOwner int
+	row := stmt.QueryRow(taskId, taskOwner)
+	if err = row.Scan(&dbId, &dbOwner); err == sql.ErrNoRows {
+		fmt.Println("Invalid task access, user does not own task")
+		return false
+	} else if err != nil {
+		fmt.Println("ERROR: ", err)
+		return false
+	}
+	return true
 }
