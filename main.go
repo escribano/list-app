@@ -14,7 +14,7 @@ import (
 
 	//"crypto/rand"
 	//"database/sql"
-	"fmt"
+	//"fmt"
 	"net/http"
 )
 
@@ -23,13 +23,11 @@ var (
 )
 
 func main() {
-	fmt.Println()
 	router := mux.NewRouter()
 	InitHttpHandlers(router)
 
 	api.InitializeDBConnection()
 	defer api.DB.Close()
-	api.GetUser("gaige@chatsubo.net")
 
 	http.ListenAndServe(":8080", context.ClearHandler(http.DefaultServeMux))
 }
