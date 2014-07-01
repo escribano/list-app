@@ -9,6 +9,8 @@ import (
 
 func base(res http.ResponseWriter, req *http.Request) {}
 
+// This is a container function for all routes
+// All the routes live within a map for readability and organization.
 func InitHttpHandlers(router *mux.Router) {
 	routes := map[string]http.HandlerFunc{
 		// Static file routes
@@ -38,6 +40,7 @@ func InitHttpHandlers(router *mux.Router) {
 	// Serve static directory
 	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("static/"))))
 
+	// Serve all routes in routes map
 	for route, handler := range routes {
 		router.HandleFunc(route, handler)
 	}
