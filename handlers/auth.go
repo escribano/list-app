@@ -1,18 +1,14 @@
 package handlers
 
 import (
-	//"github.com/gorilla/context"
-	//"github.com/gorilla/mux"
-	//"github.com/gorilla/rpc"
-	//"github.com/gorilla/rpc/json"
-	//"github.com/gorilla/schema"
-	//"github.com/gorilla/sessions"
 	"code.google.com/p/go.crypto/pbkdf2"
+	"github.com/gaigepr/list-app/api"
+
 	"crypto/rand"
 	"crypto/sha512"
 	"encoding/base64"
 	"fmt"
-	//"net/http"
+	"net/http"
 )
 
 func NewPass(password string) (string, string) {
@@ -56,4 +52,88 @@ func AuthPass(password, hash, salt string) bool {
 		}
 	}
 	return match
+}
+
+// Handler for making a new user
+func PostNewAccount(res http.ResponseWriter, req *http.Request) {
+	newUser := new(CreateAccountForm)
+
+	if err := req.ParseForm(); err != nil {
+		fmt.Println("ERROR parsing form: ", err)
+	}
+	if err := Decoder.Decode(newUser, req.PostForm); err != nil {
+		fmt.Println("ERROR decoding form: ", err)
+	}
+
+	if err := newUser.Validate(); err != nil {
+		fmt.Println(err)
+		fmt.Fprintf(res, err.Error())
+		return
+	}
+
+	hash, salt := NewPass(newUser.Password)
+	if err := api.CreateNewUser(newUser.Email, newUser.FirstName, newUser.LastName, hash, salt); err != nil {
+		fmt.Println("Error creating new user: ", err) // Make a log function bruh
+		fmt.Fprint(res, "There was an error creating your account.")
+		return
+	}
+
+	fmt.Println("Made a new user: ", newUser, hash, salt)
+	fmt.Fprint(res, "Booyah, success!")
+}
+
+// Handler for authenticating a user
+func PostLogin(res http.ResponseWriter, req *http.Request) {
+	user := new(LoginForm)
+
+	if err := req.ParseForm(); err != nil {
+		fmt.Println("ERROR parsing form: ", err)
+		fmt.Fprint(res, "<h1>500: Internal Server Error</h1>")
+		return
+	}
+	if err := Decoder.Decode(user, req.PostForm); err != nil {
+		fmt.Println("ERROR decoding form: ", err)
+		fmt.Fprint(res, "<h1>500: Internal Server Error</h1>")
+		return
+	}
+
+	if err := user.Validate(); err != nil {
+		fmt.Println(err)
+		fmt.Fprintf(res, err.Error())
+		return //and redirect or something
+	}
+
+	userObj, err := api.GetUser(user.Email)
+	if err != nil {
+		fmt.Println("ERROR getting user: ", err)
+		fmt.Fprint(res, "<h1>500: Internal Server Error</h1>")
+		return
+	}
+
+	if !AuthPass(user.Password, userObj.Hash, userObj.Salt) {
+		fmt.Fprint(res, "Failed to authenticate")
+		return
+	}
+
+	// Make a new session with a random string as the name.
+	// Save that string in the Store or something so that none
+	// of that data is client side.
+	session, err := Store.Get(req, "list-app")
+	if err != nil {
+		fmt.Println("ERROR gettting session: ", err)
+	}
+	// generate and insert a unique and long session id
+	session.Values["sessionId"] = "FUCKING GEEZUZ"
+
+	if user.RememberMe {
+		session.Options.MaxAge = 120
+	} else {
+		session.Options.MaxAge = 30
+	}
+
+	if err := session.Save(req, res); err != nil {
+		fmt.Println("ERROR saving session: ", err)
+	}
+	fmt.Println("SAVED: ", session)
+	http.Redirect(res, req, "/task/get/all", 302)
 }
