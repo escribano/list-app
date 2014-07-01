@@ -123,10 +123,12 @@ func PostLogin(res http.ResponseWriter, req *http.Request) {
 		fmt.Println("ERROR gettting session: ", err)
 	}
 	// generate and insert a unique and long session id
-	session.Values["sessionId"] = "FUCKING GEEZUZ"
+	session.Values["sessionId"] = "He is auth, chill"
+	session.Values["userId"] = userObj.UserId
+	session.Values["email"] = userObj.Email
 
 	if user.RememberMe {
-		session.Options.MaxAge = 120
+		session.Options.MaxAge = 1200000
 	} else {
 		session.Options.MaxAge = 30
 	}
@@ -135,7 +137,7 @@ func PostLogin(res http.ResponseWriter, req *http.Request) {
 		fmt.Println("ERROR saving session: ", err)
 	}
 	fmt.Println("SAVED: ", session)
-	http.Redirect(res, req, "/task/get/all", 302)
+	http.Redirect(res, req, "/list-view", 302)
 }
 
 // Deletes a user's session logging them out

@@ -39,7 +39,7 @@ func GetTags(taskId int) ([]string, error) {
 	}
 	defer rows.Close()
 
-	for row.Next() {
+	for rows.Next() {
 		var tag string
 		if err := rows.Scan(&tag); err != nil {
 			fmt.Println("ERROR scanning tasks: ", err)

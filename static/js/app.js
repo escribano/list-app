@@ -3,41 +3,30 @@ var taskApp = angular.module("taskApp", []);
 
 
 taskApp.controller("taskCtrl", function taskCtrl($scope, $http) {
-    $scope.User = {"FirstName": "Jokie", "LastName":"McFakernammen"};
-    $scope.TaskGroups = [
-        {"name": "Uncategorized",
-         "tasks": [
-             {"taskId": 4,
-              "taskOwner": 2,
-              "taskText":"Get some laundry done!"
-             },
-             {"taskId": 8,
-              "taskOwner": 2,
-              "taskText":"Get food..."
-             }
-         ]},
-        {"name": "CRAP",
-         "tasks": [
-             {"taskId": 88,
-              "taskOwner": 2,
-              "taskText":"CRY ABOUT THE WORLD"
-             },
-             {"taskId": 88,
-              "taskOwner": 2,
-              "taskText":"askd a;skd a;klwmw dasd, asdklnm lkfnoasihf laksdjl kjasldkam lk"
-             },
-             {"taskId": 88,
-              "taskOwner": 2,
-              "taskText":"WE CANT SEE ALL THIS, ITS TOO LONG!!!!! CRY ABOUT THE WORLD SAD IJNQEIJ#)( J)(EWFJ )( FJ)(QEFJW)(OE FJPOEWIFJ WPOEIFE "
-             },
-             {"taskId": 76,
-              "taskOwner": 2,
-              "taskText":"use fewer \"...\"  ..."
-             }
-         ]}
-    ];
+    console.log("In taskCtrl");
+    $scope.User = {};
+    // TODO: Discuss data format and presentation
+    $scope.TaskGroups = $http({method: "GET",
+                                url: "/task/get/all"
+                               }).success(function(data, status, headers, config){
+                                   return data.Data;
+                               }).error(function(data, status, headers, config){
+                                   console.log("ERROR: Could not retrieve tasks.");
+                                   // Some kind of flashy div error message. Maybe try again as well?
+                                   return {};
+                               });
 
     $scope.FocusedGroup = $scope.TaskGroups[0];
+
+    $scope.TestQuery = function() {
+        $http({method: "GET",
+               url: "/task/get/all"
+              }).success(function(data, status, headers, config){
+                  console.log(data);
+              }).error(function(data, status, headers, config){
+                  console.log("ERROR: Could not retrieve tasks.");
+              });
+    };
 
     $scope.UpdateFocusedGroup = function(group) {
         $scope.FocusedGroup = group;
