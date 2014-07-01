@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="taskApp" ng-controller="taskCtrl">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,98 +8,93 @@
     <link rel="stylesheet" type="text/css" href="../static/vendor/css/bootstrap.min.css">
   </head>
   <body>
-  	<div class="sidebar">
-  		<div>
-  		<img src="http://static.squarespace.com/static/52df376ae4b01c1215aaecaf/t/52e98d66e4b0641b194a45a1/1391037800238/Mike%20Profile%20Circle.png">
-  		<h3 id="name">Joke McFakename</h3>
-  		<form class="search">
-  			<input type="search" placeholder="Search Groups">
-  		</form>
-  		<h4>My Groups</h4>
-  		<ul>
-  			<form>
-  			<li>
-  				<div class="new_group clearfix ">
-  					<input type="text" name="new_group" placeholder="New Group">
-					<div class="add_butt_group">
-						<button type="submit">
-							<i class="glyphicon glyphicon-ok icon-white"></i>
-						</button>
-					</div>
-				</div>
-  			</li>
-  		</form>
-
-		<form>
-			<li class="group_item clearfix l1">
-				<a href="#">
-				<h3>Chores</h3>
-				<div class="add_butt_grey">
-				</a>
-			</li>
-		</form>
+    <div class="sidebar">
+      <div>
+  	<img src="http://static.squarespace.com/static/52df376ae4b01c1215aaecaf/t/52e98d66e4b0641b194a45a1/1391037800238/Mike%20Profile%20Circle.png">
+  	<h3 id="name">{{ User.FirstName }} {{ User.LastName }}</h3>
+  	<form class="search">
+  	  <input type="search" placeholder="Search Groups">
+  	</form>
+  	<h4>My Groups</h4>
 
 
-  		</ul>
-
-  	</div>
-  </div>
-<div class="grad_cont"></div>
-<div class="content">
-  	<div class="col-lg-6 col-md-offset-4 col-sm-offset-1 col-md-7
-  	col-sm-10 new_list_item"> <form>
-		<div class="new_task"><input type="text" name="new_task" placeholder="New Task"></div>
-		<div class="add_butt">
-			<button type="submit">
-				<i class="glyphicon glyphicon-ok icon-white"></i>
-			</button>
+  	<ul>
+  	  <form>
+  	    <li>
+  	      <div class="new_group clearfix ">
+  		<input type="text" name="new_group" placeholder="New Group">
+		<div class="add_butt_group">
+		  <button type="submit">
+		    <i class="glyphicon glyphicon-ok icon-white"></i>
+		  </button>
 		</div>
-		<div class="drop_butt">
-			<button type="submit">
-				<i class="glyphicon glyphicon-th-list icon-white"></i>
-			</button>
-		</div>
-	</form></div>
-
-<div class="col-lg-6 col-md-offset-4 col-sm-offset-1 col-md-7
-  	col-sm-10 list">
-	<form class="title-edit">
-		<input type="text" value="My New List">
-	</form>
-	<ul>
-		<li class="list_item clearfix l1">
-			<form>
-				<h3>Research mini itx vs micro atx</h3>
-				<div class="add_butt_grey">
-					<input type="checkbox" class="submit_check">
-				</div>
-				<div class="del_butt_grey"><button type="submit"><i class="glyphicon glyphicon-remove"></i></button></div>
-			</form>
-		</li>
-
-	</ul>
-</div>
-
-<div class="col-lg-6 col-md-offset-4 col-sm-offset-1 col-md-7
-  	col-sm-10 list list_tag">
-<form class="title-edit">
-		<input type="text" value="Chores">
-	</form>
-	<ul>
-			<li class="list_item clearfix l1">
-			<form>
-				<h3>Research mini itx vs micro atx</h3>
-				<div class="add_butt_grey">
-					<input type="checkbox" class="submit_check">
-				</div>
-				<div class="del_butt_grey"><button type="submit"><i class="glyphicon glyphicon-remove"></i></button></div>
-			</form>
-		</li>
-
-	</ul>
-</div>
+	      </div>
+  	    </li>
+  	  </form>
+        </ul>
 
 
-</div>
+        <ul>
+	  <li class="group_item clearfix l1" ng-repeat="group in TaskGroups">
+	    <a href="" ng-click="UpdateFocusedGroup(TaskGroups[$index]);">
+	      <h3>{{ group.name }}</h3>
+	      <div class="add_butt_grey">
+	    </a>
+	  </li>
+        </ul>
+
+
+        </div>
+      </div>
+      <div class="grad_cont"></div>
+      <div class="content">
+
+        <!-- NEW TASK FORM -->
+  	<div class="col-lg-6 col-md-offset-4 col-sm-offset-1 col-md-7 col-sm-10 new_list_item">
+          <form>
+	    <div class="new_task">
+              <input type="text" name="new_task" placeholder="New Task">
+            </div>
+	    <div class="add_butt">
+	      <button type="submit">
+		<i class="glyphicon glyphicon-ok icon-white"></i>
+	      </button>
+	    </div>
+	    <div class="drop_butt">
+	      <button type="submit">
+		<i class="glyphicon glyphicon-th-list icon-white"></i>
+	      </button>
+	    </div>
+	  </form>
+        </div>
+
+
+
+
+        <!-- UNCATEGORIZED TASKS -->
+        <div>
+          <div class="col-lg-6 col-md-offset-4 col-sm-offset-1 col-md-7 col-sm-10 list">
+	    <form class="title-edit">
+	      <input type="text" value="{{ FocusedGroup.name }}">
+	    </form>
+            <ul>
+	      <li class="list_item clearfix l1" ng-repeat="task in FocusedGroup.tasks">
+	        <form>
+		  <h3>{{ task.taskText }}</h3>
+		  <div class="add_butt_grey">
+		    <input type="checkbox" class="submit_check">
+		  </div>
+		  <div class="del_butt_grey"><button type="submit"><i class="glyphicon glyphicon-remove"></i></button></div>
+	        </form>
+	      </li>
+	    </ul>
+          </div>
+        </div>
+
+
+
+      </div>
   </body>
-  </html>
+  <script src="/static/vendor/js/angular.min.js" type="text/javascript"></script>
+  <script src="/static/js/app.js" type="text/javascript"></script>
+</html>
