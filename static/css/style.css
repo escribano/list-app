@@ -1,11 +1,24 @@
 body{
 	margin:0;
 	padding: 0;
-	position: relative;
+
 }
 
 .content{
 	z-index: 1;
+	}
+
+.grad_cont{
+	width: 100%;
+	height: 100vh;
+	position: fixed;
+	background: -moz-linear-gradient(-45deg,  rgba(239,47,99,1) 0%, rgba(219,150,120,1) 76%, rgba(242,174,145,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(239,47,99,1)), color-stop(76%,rgba(219,150,120,1)), color-stop(100%,rgba(242,174,145,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(-45deg,  rgba(239,47,99,1) 0%,rgba(219,150,120,1) 76%,rgba(242,174,145,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(-45deg,  rgba(239,47,99,1) 0%,rgba(219,150,120,1) 76%,rgba(242,174,145,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(-45deg,  rgba(239,47,99,1) 0%,rgba(219,150,120,1) 76%,rgba(242,174,145,1) 100%); /* IE10+ */
+background: linear-gradient(135deg,  rgba(239,47,99,1) 0%,rgba(219,150,120,1) 76%,rgba(242,174,145,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ef2f63', endColorstr='#f2ae91',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
 /*-----login----*/
@@ -127,7 +140,7 @@ form .text input{
 		position: relative;
 		height: auto;
 		width: 120px;
-		padding: 300px 0;
+		padding: 100px 0;
 		margin: 0 auto;
 		z-index: 1;
 	}
@@ -154,16 +167,16 @@ form .text input{
 	.logo_paper{
 		position: absolute;
 		margin:20px 0 0 0; 
-		height: 100px;
-		width: 80px;
+		height: 120px;
+		width: 90px;
 		border-bottom: solid 20px #F51668;
 		border-left: solid 20px #F51668;
 		border-right: solid 0px #F51668;
 		border-top: solid 0px #F51668;
 		z-index: 2;
-		transition:margin .5s, border-right .3s, border-bottom .3s, border-top .3s, height .3s;
-		-webkit-transition:margin .5s, border-right .3s, border-bottom .3s, border-top .3s, height .3s;
-		-moz-transition:margin .5s, border-right .3s, border-bottom .3s, border-top .3s, height .3s;
+		transition:margin .5s, border-right .3s, border-bottom .3s, border-top .3s, width .3s;
+		-webkit-transition:margin .5s, border-right .3s, border-bottom .3s, border-top .3s, width .3s;
+		-moz-transition:margin .5s, border-right .3s, border-bottom .3s, border-top .3s, width .3s;
 	}
 	.logo_lines{
 		position: absolute;
@@ -183,7 +196,8 @@ form .text input{
 		border-right: solid 20px #BA1135;
 		border-bottom: solid 20px #BA1135;
 		border-top: solid 20px #F51668;
-		height: 80px;
+		height: 120px;
+		width: 120px;
 	}
 
 	.code_logo a:hover > .logo_lines{
@@ -206,8 +220,8 @@ form .text input{
 	.check{
 		position: absolute;
 		margin:25px 0 0px 45px;
-		width: 20px;
-		height: 40px;
+		width: 30px;
+		height: 60px;
 		border-right: solid 0px #F51668;
 		border-bottom: solid 0px #F51668;
 		z-index: 3;
@@ -331,6 +345,7 @@ form .text input{
 	padding:0 130px 0 10px;
 	margin-bottom: 5px;
 	font-size: 20pt;
+	border-radius:0px 4px 4px 0px;
 	background: #f7f7f7;
 	box-shadow: 0 2px 2px rgba(0,0,0,.02) inset;
 	position: absolute;
@@ -470,7 +485,7 @@ input.submit_check{
 	height: 100vh;
 	position:fixed;
 	border-right: solid 0px #288FEF;
-	box-shadow: 2px 0 30px #eee;
+	box-shadow: 0 5px 5px rgba(0,0,0,.2);
 	z-index: 100;
 }
 
@@ -510,10 +525,26 @@ nav{
 /*------- homepage ------*/
 
 .hero_img{
-	background: url(http://ericcahan.com/wp-content/uploads/2014/02/EC_0722pm_Two_Mile_Hallow.jpg);
-	background-size: 100%;
-	height: 700px;
-	background-position: bottom;
+	background: url(../images/screenshot.png) no-repeat center top; 
+	background-color: #3498db;
+	margin-top: -200px;
+	background-attachment: fixed;
+	background-position: center center;
+	min-height: 300px;
+	width: 100%;
+    opacity: .3;
+    filter: blur(5px);
+	-webkit-filter: blur(5px); 
+    -moz-filter: blur(5px);
+    -webkit-background-size: 100%;
+    -moz-background-size: 100%;
+    -o-background-size: 100%;
+    background-size: 100%;
+
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 
 }
 
