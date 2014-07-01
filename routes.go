@@ -18,11 +18,11 @@ func InitHttpHandlers(router *mux.Router) {
 		"/list-view": GetListView, // temp route
 
 		// Routes related to users
-		"/user/create":       PostNewAccount,
-		"/user/delete":       base,
-		"/user/update":       base,
-		"/user/authenticate": PostLogin,
-		"/user/logout":       base,
+		"/user/create": PostNewAccount,
+		"/user/delete": base,
+		"/user/update": base,
+		"/user/login":  PostLogin,
+		"/user/logout": base,
 
 		// Routes related to tags
 		"/tag/add": base,
