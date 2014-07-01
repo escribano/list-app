@@ -1,8 +1,6 @@
 package main
 
 import (
-	_ "github.com/lib/pq"
-
 	"github.com/gaigepr/list-app/api"
 
 	"github.com/gorilla/context"

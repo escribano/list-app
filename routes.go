@@ -1,9 +1,10 @@
 package main
 
 import (
-	"net/http"
-
+	. "github.com/gaigepr/list-app/handlers"
 	"github.com/gorilla/mux"
+
+	"net/http"
 )
 
 func base(res http.ResponseWriter, req *http.Request) {}
@@ -29,11 +30,9 @@ func InitHttpHandlers(router *mux.Router) {
 		// Routes related to tasks
 		"/task/create":          base,
 		"/task/delete":          base,
-		"/task/update/tags":     base,                            // Perhaps make one update routes and pass the relevant info in json
-		"/task/update/text":     base,                            // Update teh info for a task
-		"/task/update/deadline": base,                            // Set a dealine for a task
-		"/task/get/all":         Use(GetUserTasks, RequireLogin), // Default route to be used on login
-		"/task/get/{id:[0-9]+}": base,                            // This may not be a useful route.
+		"/task/update":          base,
+		"/task/get/all":         Use(GetUserTasks, RequireLogin),
+		"/task/get/{id:[0-9]+}": base,
 	}
 
 	// Serve static directory
