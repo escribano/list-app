@@ -1,24 +1,12 @@
 package handlers
 
 import (
-	//"github.com/gorilla/rpc"
-	//"github.com/gorilla/rpc/js
-	"github.com/gorilla/schema"
-	"github.com/gorilla/sessions"
-
 	"github.com/gaigepr/list-app/api"
 
 	//"crypto/rand"
 	"fmt"
 	"io/ioutil"
 	"net/http"
-)
-
-var (
-	hashKey  = []byte("a-very-secret-thing-omg")
-	blockKey = []byte("we-must-encrypt-all-of-the-thing")
-	store    = sessions.NewCookieStore([]byte(" buttmang"), []byte("12345678901234567890123456789012"))
-	decoder  = schema.NewDecoder()
 )
 
 // Get index.html form
@@ -52,7 +40,7 @@ func PostNewAccount(res http.ResponseWriter, req *http.Request) {
 	if err := req.ParseForm(); err != nil {
 		fmt.Println("ERROR parsing form: ", err)
 	}
-	if err := decoder.Decode(newUser, req.PostForm); err != nil {
+	if err := Decoder.Decode(newUser, req.PostForm); err != nil {
 		fmt.Println("ERROR decoding form: ", err)
 	}
 
@@ -82,7 +70,7 @@ func PostLogin(res http.ResponseWriter, req *http.Request) {
 		fmt.Fprint(res, "<h1>500: Internal Server Error</h1>")
 		return
 	}
-	if err := decoder.Decode(user, req.PostForm); err != nil {
+	if err := Decoder.Decode(user, req.PostForm); err != nil {
 		fmt.Println("ERROR decoding form: ", err)
 		fmt.Fprint(res, "<h1>500: Internal Server Error</h1>")
 		return
@@ -107,9 +95,9 @@ func PostLogin(res http.ResponseWriter, req *http.Request) {
 	}
 
 	// Make a new session with a random string as the name.
-	// Save that string in the store or something so that none
+	// Save that string in the Store or something so that none
 	// of that data is client side.
-	session, err := store.Get(req, "list-app")
+	session, err := Store.Get(req, "list-app")
 	if err != nil {
 		fmt.Println("ERROR gettting session: ", err)
 	}
@@ -132,7 +120,7 @@ func PostLogin(res http.ResponseWriter, req *http.Request) {
 // Handler for getting all a user's tasks; apart of post login screen
 func GetUserTasks(res http.ResponseWriter, req *http.Request) {
 	//api.GetAllUserTasks
-	session, err := store.Get(req, "list-app")
+	session, err := Store.Get(req, "list-app")
 	if err != nil {
 		fmt.Println("ERROR gettting session: ", err)
 	}
@@ -164,7 +152,7 @@ func Use(handler http.HandlerFunc, mid ...func(http.Handler) http.HandlerFunc) h
 // If not, the function returns a 302 redirect to the login page.
 func RequireLogin(handler http.Handler) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		if session, _ := store.Get(r, "list-app"); session.Values["sessionId"] != nil {
+		if session, _ := Store.Get(r, "list-app"); session.Values["sessionId"] != nil {
 			handler.ServeHTTP(w, r)
 		} else {
 			http.Redirect(w, r, "/login", 302)
