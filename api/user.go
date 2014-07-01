@@ -14,6 +14,8 @@ type UserObject struct {
 }
 
 // api function for creating a new user
+// given the user's imformation create and add a user to the database.
+// if there is an error return the error.
 func CreateNewUser(email, first, last, hash, salt string) (err error) {
 	stmt, err := DB.Prepare("INSERT INTO users (email, first_name, last_name, hash, salt) VALUES ($1, $2, $3, $4, $5);")
 	if err != nil {
@@ -30,6 +32,8 @@ func CreateNewUser(email, first, last, hash, salt string) (err error) {
 }
 
 // api function for getting a user from an email
+// given a user's email gets the user's information and returns it.
+// if there is an error return the error as well.
 func GetUser(email string) (UserObject, error) {
 	stmt, err := DB.Prepare("SELECT user_id, first_name, last_name, email, hash, salt FROM users WHERE email = $1;")
 	if err != nil {

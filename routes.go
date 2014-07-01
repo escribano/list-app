@@ -1,13 +1,16 @@
 package main
 
 import (
-	"net/http"
-
+	. "github.com/gaigepr/list-app/handlers"
 	"github.com/gorilla/mux"
+
+	"net/http"
 )
 
 func base(res http.ResponseWriter, req *http.Request) {}
 
+// This is a container function for all routes
+// All the routes live within a map for readability and organization.
 func InitHttpHandlers(router *mux.Router) {
 	routes := map[string]http.HandlerFunc{
 		// Static file routes
@@ -17,11 +20,11 @@ func InitHttpHandlers(router *mux.Router) {
 		"/list-view": GetListView, // temp route
 
 		// Routes related to users
-		"/user/create":       PostNewAccount,
-		"/user/delete":       base,
-		"/user/update":       base,
-		"/user/authenticate": PostLogin,
-		"/user/logout":       base,
+		"/user/create": PostNewAccount,
+		"/user/delete": base,
+		"/user/update": base,
+		"/user/login":  PostLogin,
+		"/user/logout": PostLogout,
 
 		// Routes related to tags
 		"/tag/add": base,
@@ -29,16 +32,15 @@ func InitHttpHandlers(router *mux.Router) {
 		// Routes related to tasks
 		"/task/create":          base,
 		"/task/delete":          base,
-		"/task/update/tags":     base, // Perhaps make one update routes and pass the relevant info in json
-		"/task/update/text":     base, // Update teh info for a task
-		"/task/update/deadline": base, // Set a dealine for a task
-		"/task/get/all":         base, // Default route to be used on login
-		"/task/get/{id:[0-9]+}": base, // This may not be a useful route.
+		"/task/update":          base,
+		"/task/get/all":         Use(GetUserTasks, RequireLogin),
+		"/task/get/{id:[0-9]+}": base,
 	}
 
 	// Serve static directory
 	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("static/"))))
 
+	// Serve all routes in routes map
 	for route, handler := range routes {
 		router.HandleFunc(route, handler)
 	}
