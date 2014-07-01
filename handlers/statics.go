@@ -29,3 +29,9 @@ func GetListView(res http.ResponseWriter, req *http.Request) {
 	body, _ := ioutil.ReadFile("templates/list-view.html")
 	fmt.Fprint(res, string(body))
 }
+
+// list-view.html page
+func DevList(res http.ResponseWriter, req *http.Request) {
+	body, _ := ioutil.ReadFile("templates/list-view-lite.html")
+	fmt.Fprint(res, string(body))
+}
