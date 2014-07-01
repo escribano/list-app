@@ -137,3 +137,17 @@ func PostLogin(res http.ResponseWriter, req *http.Request) {
 	fmt.Println("SAVED: ", session)
 	http.Redirect(res, req, "/task/get/all", 302)
 }
+
+// Deletes a user's session logging them out
+func PostLogout(res http.ResponseWriter, req *http.Request) {
+	session, err := Store.Get(req, "list-app")
+	if err != nil {
+		fmt.Println("ERROR gettting session: ", err)
+	}
+	delete(session.Values, "sessionId")
+	fmt.Println("DELETING SESSION", session)
+	if err := session.Save(req, res); err != nil {
+		fmt.Println("ERROR saving session: ", err)
+	}
+	http.Redirect(res, req, "/", 302)
+}

@@ -24,7 +24,7 @@ func InitHttpHandlers(router *mux.Router) {
 		"/user/delete": base,
 		"/user/update": base,
 		"/user/login":  PostLogin,
-		"/user/logout": base,
+		"/user/logout": PostLogout,
 
 		// Routes related to tags
 		"/tag/add": base,
