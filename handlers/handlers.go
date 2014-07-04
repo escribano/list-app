@@ -1,19 +1,40 @@
 package handlers
 
 import (
+	"github.com/gaigepr/list-app/api"
+
 	//"crypto/rand"
+	"encoding/json"
 	"fmt"
 	"net/http"
 )
 
+type JsonResponse struct {
+	Name string
+	Data interface{}
+}
+
 // Handler for getting all a user's tasks; apart of post login screen
 func GetUserTasks(res http.ResponseWriter, req *http.Request) {
-	//api.GetAllUserTasks
 	session, err := Store.Get(req, "list-app")
 	if err != nil {
 		fmt.Println("ERROR gettting session: ", err)
+		fmt.Fprint(res, "500: Internal Server Error.")
+		return
 	}
-	fmt.Println("OLD SESSION: ", session)
+
+	tasks, err := api.GetAllUserTasks(session.Values["userId"].(int))
+	fmt.Println(tasks)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	b, err := json.Marshal(JsonResponse{"GetUserTasks", tasks})
+	if err != nil {
+		fmt.Println("ERROR marshaling", err)
+	}
+
+	fmt.Fprint(res, (string(b)))
 }
 
 // Handler for creating a new task if a user is authed

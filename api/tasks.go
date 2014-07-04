@@ -12,6 +12,7 @@ type TaskObject struct {
 	TaskId      int
 	Owner       int
 	Text        string
+	Tags        []string
 	DateCreated time.Time
 	//DateDue     time.Date
 }
@@ -30,6 +31,7 @@ func CreateTask(text string, owner int) (err error) {
 		fmt.Println("ERROR inserting new task: ", err)
 		return err
 	}
+
 	fmt.Println(results)
 	return nil
 }
@@ -99,6 +101,15 @@ func GetAllUserTasks(userId int) ([]TaskObject, error) {
 	if err := rows.Err(); err != nil {
 		fmt.Println("Row errorr?", err)
 	}
+
+	//tasks.Tags, err := GetTags() //task id
+	for i := range tasks {
+		tasks[i].Tags, err = GetTags(tasks[i].TaskId)
+		if err != nil {
+			fmt.Println("ERROR getting tags: ", err)
+		}
+	}
+	fmt.Println(tasks)
 	return tasks, nil
 }
 

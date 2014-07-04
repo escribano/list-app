@@ -17,7 +17,7 @@ func InitHttpHandlers(router *mux.Router) {
 		"/":          Index,
 		"/login":     GetLogin,
 		"/register":  GetNewAccount,
-		"/list-view": GetListView, // temp route
+		"/list-view": DevList, // temp route
 
 		// Routes related to users
 		"/user/create": PostNewAccount,

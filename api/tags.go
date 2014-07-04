@@ -25,6 +25,34 @@ func CreateNewTag(tag string) (err error) {
 	return nil
 }
 
+func GetTags(taskId int) ([]string, error) {
+	var tags []string
+	stmt, err := DB.Prepare("Select tag_text from (tags natural join tagmap natural join tasks) where task_id = $1;")
+	if err != nil {
+		fmt.Println("ERROR preparing statement: ", err)
+		return tags, err
+	}
+	rows, err := stmt.Query(taskId)
+	if err != nil {
+		fmt.Println("ERROR selecting all tasks: ", err)
+		return tags, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var tag string
+		if err := rows.Scan(&tag); err != nil {
+			fmt.Println("ERROR scanning tasks: ", err)
+		}
+		tags = append(tags, tag)
+	}
+	if err := rows.Err(); err != nil {
+		fmt.Println("Row errorr?", err)
+	}
+
+	return tags, nil
+}
+
 // add a tag mapping given the task id number and the tag text string
 // returns an error if there is one.
 func CreateTagMap(taskId int, tagText string) (err error) {
