@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../static/css/style-test.css">
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="../static/vendor/css/bootstrap.min.css">
+  </head>
+  <body>
+
+
+  <a href="#open-sidebar" class="sidebar_butt_open">
+  <i class="glyphicon glyphicon-cog"></i>
+  </a>
+  	<div id="open-sidebar" class="sidebar">
+  		<a href="#close" class="sidebar_butt_close">
+  <i class="glyphicon glyphicon-remove"></i>
+  </a>
+  		<div>
+  		<form class="search">
+  			<input type="search" placeholder="Search Groups">
+  		</form>
+  		<h4>My Groups</h4>
+  		<ul>
+  			<form>
+  			<li>
+  				<div class="new_group clearfix ">
+  					<input type="text" name="new_group" placeholder="New Group">
+					<div class="add_butt_group">
+						<button type="submit">
+							<i class="glyphicon glyphicon-ok icon-white"></i>
+						</button>
+					</div>
+				</div>
+  			</li>
+  		</form>
+
+		<form>
+			<li class="group_item clearfix">
+				<a href="#">
+				<h3>Chores</h3>
+				<div class="add_butt_grey">
+				</a>
+			</li>
+		</form>
+
+
+  		</ul>
+
+  	</div>
+  </div>
+<div class="grad_cont"></div>
+<div class="content open-sidebar">
+  	<div class="col-sm-offset-1 col-sm-10
+  	new_list_item"> 
+  	<form>
+		<div class="new_task"><input type="text" name="new_task" placeholder="New Task"></div>
+		<div class="list_task"><input type="text" name="list_spec" placeholder="Lists"></div>
+		<div class="add_butt">
+			<button type="submit">
+				<i class="glyphicon glyphicon-ok icon-white"></i>
+			</button>
+		</div>
+	</form>
+
+
+
+</div>
+
+
+
+<div class="col-lg-3 col-md-4
+  	col-sm-6 ">
+  	<div class="list preview add-new">
+	<i class="glyphicon glyphicon-plus"></i>
+</div>
+</div>
+
+<div class="col-lg-3 col-md-4
+  	col-sm-6 ">
+  	<div class="list preview">
+<form class="title-edit">
+		<input type="text" value="Chores">
+	</form>
+	<ul>
+			<li class="list_item clearfix">
+
+				<h3>Research mini itx vs micro atx</h3>
+				
+		</li>
+
+	</ul>
+	</div>
+</div>
+
+<div class="col-lg-3 col-md-4
+  	col-sm-6 ">
+  	<div class="list preview">
+<form class="title-edit">
+		<input type="text" value="Chores">
+	</form>
+	<ul>
+			<li class="list_item clearfix">
+			
+				<h3>Research mini itx vs micro atx</h3>
+				
+		</li>
+
+	</ul>
+	</div>
+</div>
+
+
+<div class="col-lg-3 col-md-4
+  	col-sm-6 ">
+  	<div class="list">
+<form class="title-edit">
+		<input type="text" value="Chores">
+	</form>
+	<ul>
+			<li class="list_item clearfix">
+			<form>
+				<h3>Research mini itx vs micro atx</h3>
+				<div class="add_butt_grey">
+					<input type="checkbox" name="checkboxG1" id="checkboxG1" class="css-checkbox submit_check" /><label for="checkboxG1" class="css-label"></label>
+				</div>
+				<div class="del_butt_grey"><button type="submit"><i class="glyphicon glyphicon-remove"></i></button></div>
+			</form>
+		</li>
+
+
+			<li class="list_item clearfix">
+			<form>
+				<h3>Research mini itx vs micro atx</h3>
+				<div class="add_butt_grey">
+					<input type="checkbox" name="checkboxG2" id="checkboxG2" class="css-checkbox submit_check" /><label for="checkboxG2" class="css-label"></label>
+				</div>
+				<div class="del_butt_grey"><button type="submit"><i class="glyphicon glyphicon-remove"></i></button></div>
+			</form>
+		</li>
+
+
+
+			<li class="list_item clearfix">
+			<form>
+				<h3>Research mini itx vs micro atx</h3>
+				<div class="add_butt_grey">
+					<input type="checkbox" name="checkboxG3" id="checkboxG3" class="css-checkbox submit_check" /><label for="checkboxG3" class="css-label"></label>
+				</div>
+				<div class="del_butt_grey"><button type="submit"><i class="glyphicon glyphicon-remove"></i></button></div>
+			</form>
+		</li>
+
+
+
+			
+
+	</ul>
+	</div>
+</div>
+</div>
+<script type="text/javascript">
+$("myElement").addEvent("click", function(){
+	  var SM = new SimpleModal({"btn_ok":"Alert button"});
+	      SM.show({
+	        "title":"Title",
+	        "contents":"Your message..."
+	      });
+	});
+</script>
+  </body>
+  </html>
