@@ -40,8 +40,9 @@ body{
 
 .grad_cont{
 	width: 100%;
-	height: 100vh;
+	height: 120vh;
 	position: fixed;
+	background-position: center;
 	background: -moz-linear-gradient(-45deg,  rgba(239,47,99,1) 0%, rgba(219,150,120,1) 76%, rgba(242,174,145,1) 100%); /* FF3.6+ */
 background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(239,47,99,1)), color-stop(76%,rgba(219,150,120,1)), color-stop(100%,rgba(242,174,145,1))); /* Chrome,Safari4+ */
 background: -webkit-linear-gradient(-45deg,  rgba(239,47,99,1) 0%,rgba(219,150,120,1) 76%,rgba(242,174,145,1) 100%); /* Chrome10+,Safari5.1+ */
@@ -428,34 +429,76 @@ color: #f21800;
 
 .new_list_item .new_task input{
 	width: 100%;
-	height: 60px;
+	height: 70px;
 	border:none;
 	border-bottom: solid 4px #fff;
-	padding:0 130px 0 10px;
+	border-radius: 0;
+	padding-left:10px;
 	margin-bottom: 5px;
 	font-size: 32pt;
 	color: #fff !important;
 	letter-spacing: 3pt;
 	background: none;
+	position: absolute;
+}
+
+.new_list_item .new_task input::-webkit-input-placeholder{
+	color: white;
+}
+
+.new_list_item .list_task input{
+	width: 50%;
+	height: 50px;
+	border:none;
+	border-bottom: solid 2px #fff;
+	border-radius: 0;
+	padding-left:10px;
+	margin-top: 70px;
+	margin-bottom: 5px;
+	font-size: 18pt;
+	color: #fff !important;
+	letter-spacing: 3pt;
+	background: none;
+}
+
+.new_list_item .list_task input::-webkit-input-placeholder{
+	color: white;
+}
+
+.new_list_item .sub_task input{
+	width: 50%;
+	height: 50px;
+	border:none;
+	border-bottom: solid 2px #fff;
+	border-radius: 0;
+	padding-left:10px;
+	margin-bottom: 5px;
+	font-size: 18pt;
+	color: #fff !important;
+	letter-spacing: 3pt;
+	background: none;
+}
+
+.new_list_item .sub_task input::-webkit-input-placeholder{
+	color: white;
 }
 
 .add_butt button{
 	position: absolute;
 	border: solid 0px #000;
 	width: 60px;
-	height: 60px;
-	background: #2bc65a;
-	font-size: 16pt;
+	height: 80px;
+	background: none;
+	font-size: 18pt;
 	color: white;
 	right: 0px;
-	transition:color .1s, background .2s;
-		-webkit-transition:color .1s, background .2s;
-		-moz-transition:color .1s, background .2s;
+	transition:color .2s, background .2s;
+		-webkit-transition:color .2s, background .2s;
+		-moz-transition:color .2s, background .2s;
 }
 
 .add_butt button:hover{
-color: #fff;
-background: #25a84c;
+color: #EE3464;
 }
 
 .add_butt_group button{
@@ -813,6 +856,28 @@ nav li a{
 
 	.list{
 		margin:10px 0;
+	}
+	.new_list_item .new_task input{
+		font-size: 20pt;
+		height: 60px;
+	}
+
+	.new_list_item .list_task input{
+		font-size: 16pt;
+		width: 100%;
+		margin-top: 60px;
+	}
+
+	.new_list_item .sub_task input{
+		font-size: 16pt;
+		width: 100%;
+	}
+	.add_butt button{
+		height: 60px;
+		font-size: 16pt;
+	}
+	.grad_cont{
+		margin-top: -20px;
 	}
 	}
 
