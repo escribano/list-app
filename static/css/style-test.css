@@ -387,17 +387,19 @@ form .text input{
 	overflow: hidden;
 }
 
-.add_butt_grey{
+.add_butt_grey button{
 	border: solid 0px #000;
-	float:left;
 	width: 40px;
-	padding: 10px;
-	height: 55px;
-	margin-left: 0%;
+	height:50px;
+	background: none;
+	font-family: 'Lato';	
 	font-size: 15pt;
 	color: #555;
 	position: absolute;
 	right: 40px;
+	transition:color .2s, background .2s;
+		-webkit-transition:color .2s, background .2s;
+		-moz-transition:color .2s, background .2s;
 	
 }
 
