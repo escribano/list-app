@@ -302,6 +302,7 @@ form .text input{
 	background: #fff;
 	box-shadow: 0 2px 4px rgba(0,0,0,.05);
 	float: left;
+	overflow: hidden;
 }
 
 .l1{
@@ -503,7 +504,6 @@ input.submit_check{
 	box-shadow: 0 2px 4px rgba(0,0,0,.05);
 	padding: 20px;
 	margin-top: 20px;
-	border-radius: 0 0 4px 4px;
 }
 
 .list h1{
@@ -666,6 +666,57 @@ nav li a{
 	width: 90%;
 }
 
+/*--------- end type -----*/
+/*----- Modal -----*/
+
+	.modal-content{
+	position: fixed;
+	font-family: Arial, Helvetica, sans-serif;
+	
+	background: rgba(0,0,0,0.8);
+	z-index: 99999;
+	opacity:0;
+	-webkit-transition: opacity 200ms ease-in;
+	-moz-transition: opacity 200ms ease-in;
+	transition: opacity 200ms ease-in;
+	pointer-events: none;
+	}
+
+	.modal-content .background{
+		position: fixed;
+		background: #fff;
+		width: 100%;
+		height: 100vh;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		opacity: .5;
+	}
+
+	.modal-content div{
+		position: fixed;
+	}
+
+	.modal-content .content_box{
+		width: 100%;
+		height: 500px;
+		background: #fff;
+		top: 20vh;
+	right: 0;
+	bottom: 0;
+	left: 0;
+
+	}
+
+	.modal-content:target{
+		opacity:1;
+		pointer-events: auto;
+	}
+
+/*------ end Modal ----*/
+
+
 
 @media only screen and (max-width: 991px){
 	.sidebar{
@@ -675,10 +726,12 @@ nav li a{
 		-webkit-transition:margin-left .5s;
 		-moz-transition:margin-left .5s;
 		margin-top: -20px;
+		pointer-events: none
 	}
 
-	.sidebar:hover{
+	.sidebar:target	{
 		margin-left: 0;
+		pointer-events: auto;
 	}
 }
 
