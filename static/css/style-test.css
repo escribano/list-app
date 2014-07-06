@@ -335,7 +335,13 @@ form .text input{
 	overflow: hidden;
 }
 
+.card{
+	width: 100%;
+}
 
+.js-masonry{
+	width: 99%;
+}
 
 .list{
 	background: #eee;
