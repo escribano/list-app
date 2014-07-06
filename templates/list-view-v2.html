@@ -65,44 +65,42 @@
       </div>
       <div class="cards">
 
-
-<div class="js-masonry" data-masonry-options='{ "itemSelector": ".card", "columnWidth": 0 }'>
-
-
-        <!-- Begin New list card -->
-        <div class="col-lg-3 col-md-4 col-sm-6 card">
-  	  <div class="list preview add-new">
-	    <form class="title-edit">
-	      <input type="text" placeholder="New List..." ng-model="newList.name">
-	    </form>
-          </div>
-        </div>
-        <!-- End New list card -->
-
-        <!-- Begin angular ng-repeat on list cards -->
-        <div ng-repeat="list in Lists" class="masonryItem">
+        <!-- Begin Masonry -->
+        <div class="js-masonry" data-masonry-options='{ "itemSelector": ".card", "columnWidth": 0 }'>
+          <!-- Begin New list card -->
           <div class="col-lg-3 col-md-4 col-sm-6 card">
-  	    <div class="list add-new">
-              <form class="title-edit">
-	        <input type="text" value="{{ list.title }}">
+  	    <div class="list preview add-new">
+	      <form class="title-edit">
+	        <input type="text" placeholder="New List...">
 	      </form>
-	      <ul>
-	        <li class="list_item clearfix" ng-repeat="item in list.items">
-		  <form>
-		    <h3>{{ item }}</h3>
-		    <div class="add_butt_grey">
-		      <input type="checkbox" name="checkboxG1" id="checkboxG1" class="css-checkbox submit_check" /><label for="checkboxG1" class="css-label"></label>
-		    </div>
-		    <div class="del_butt_grey"><button type="submit"><i class="glyphicon glyphicon-remove"></i></button></div>
-		  </form>
-	        </li>
-	      </ul>
-	    </div> 
+            </div>
           </div>
+          <!-- End New list card -->
+          <!-- Begin angular ng-repeat on list cards -->
+          <div ng-repeat="list in Lists" ng-init="checkInc = 0" class="masonryItem">
+            <div class="col-lg-3 col-md-4 col-sm-6 card">
+  	      <div class="list add-new">
+                <form class="title-edit">
+	          <input type="text" value="{{ list.title }}">
+	        </form>
+	        <ul>
+	          <li class="list_item clearfix" ng-repeat="item in list.items">
+		    <form>
+		      <h3>{{ item }}</h3>
+		      <div class="add_butt_grey">
+		        <input type="checkbox" name="checkboxG{{ checkInc }}" id="checkboxG{{ checkInc }}" class="css-checkbox submit_check" />
+                        <label for="checkboxG{{ checkInc }}" class="css-label"></label>
+		      </div>
+		      <div class="del_butt_grey"><button type="submit"><i class="glyphicon glyphicon-remove"></i></button></div>
+		    </form>
+	        </li>
+	        </ul>
+	      </div>
+            </div>
+          </div>
+          <!-- End angular ng-repeat on list cards -->
         </div>
-        <!-- End angular ng-repeat on list cards -->
-
-</div>
+        <!-- Begin Masonry -->
 
       </div>
     </div>
