@@ -35,3 +35,9 @@ func DevList(res http.ResponseWriter, req *http.Request) {
 	body, _ := ioutil.ReadFile("templates/list-view-v2.html")
 	fmt.Fprint(res, string(body))
 }
+
+// list-view.html page
+func Dev(res http.ResponseWriter, req *http.Request) {
+	body, _ := ioutil.ReadFile("templates/dev.html")
+	fmt.Fprint(res, string(body))
+}
