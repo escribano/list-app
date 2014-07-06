@@ -315,11 +315,27 @@ form .text input{
 /*-------- list items -----*/
 
 
+.cards{
+	width: 100%;
+	clear: both;
+}
+
+.add-new .title-edit input{
+}
+
+.add-new .title-edit input::-webkit-input-placeholder{
+	opacity: 0.5;
+	color: black;
+	font-weight: 500;
+
+}
 
 .preview{
 	height: 200px;
 	overflow: hidden;
 }
+
+
 
 .list{
 	background: #eee;
@@ -328,6 +344,15 @@ form .text input{
 	margin: 20px 0px 0 0px;
 
 }
+
+.list .title-edit input{
+	letter-spacing: 1pt;
+	font-weight: 500;
+	border-bottom: solid 2px #aaa;
+	width: 100%;
+	border-radius: 0;
+}
+
 
 .list ul{
 	padding: 0;
@@ -423,8 +448,14 @@ color: #f21800;
 	list-style: none;
 	position: relative !important;
 	margin:20px 0;
-	padding:40px 0 40px 0 !important; 
+	padding:10px 0!important; 
+	overflow: hidden;
+	height: 80px;
+	-webkit-transition:height.5s;
+}
 
+.new_list_item:hover{
+	height: 200px;
 }
 
 .new_list_item .new_task input{
@@ -444,6 +475,7 @@ color: #f21800;
 
 .new_list_item .new_task input::-webkit-input-placeholder{
 	color: white;
+	opacity: 0.6;
 }
 
 .new_list_item .list_task input{
@@ -463,6 +495,7 @@ color: #f21800;
 
 .new_list_item .list_task input::-webkit-input-placeholder{
 	color: white;
+	opacity: 0.6;
 }
 
 .new_list_item .sub_task input{
@@ -481,6 +514,7 @@ color: #f21800;
 
 .new_list_item .sub_task input::-webkit-input-placeholder{
 	color: white;
+	opacity: 0.6;
 }
 
 .add_butt button{
@@ -726,15 +760,15 @@ nav li a{
 	width: 100%;
 	margin: 10px 0;
 	border: solid 0 #fff;
-	border-radius: 4px;
+	border-radius: 0px;
 	box-shadow: 0 2px 2px rgba(0,0,0,.02) inset;
 	height: 35px;
 	padding-left: 10px;
 	font-family: 'Lato';
-	font-size:10pt;
+	font-size:14pt;
 }
 
-.new_group input{
+.new_group input{	
 	width: 100%;
 	height: 40px;
 	border: solid 1px transparent;

@@ -10,7 +10,7 @@
   <body>
 
 
-    <a href="#open-sidebar" class="sidebar_butt_open">
+   <!--  <a href="#open-sidebar" class="sidebar_butt_open">
       <i class="glyphicon glyphicon-cog"></i>
     </a>
     <div id="open-sidebar" class="sidebar">
@@ -18,9 +18,7 @@
         <i class="glyphicon glyphicon-remove"></i>
       </a>
       <div>
-  	<form class="search">
-  	  <input type="search" placeholder="Search Groups">
-  	</form>
+  	
   	<h4>My Groups</h4>
   	<ul>
   	  <form>
@@ -49,7 +47,7 @@
   	</ul>
 
   	</div>
-      </div>
+      </div> -->
       <div class="grad_cont"></div>
       <div class="content open-sidebar">
   	<div class="col-sm-offset-1 col-sm-10
@@ -60,21 +58,23 @@
 	      <button type="submit">
 		<i class="glyphicon glyphicon-ok icon-white"></i>
 	      </button>
-	    <div class="list_task"><input type="text" name="list_spec" placeholder="Lists"></div>
+	    <div class="list_task"><input type="text" name="list_spec" placeholder="List"></div>
 	    <div class="sub_task"><input type="text" name="sub_task" placeholder="Subtasks"></div>
 	    </div>
 	  </form>
-
-
-
-        </div>
-
-
-
+      </div>
+<div class="col-sm-6 col-sm-offset-3">
+	<form class="search">
+  	  <input type="search" placeholder="Search Groups">
+  	</form>
+</div>
+<div class="cards">
         <div class="col-lg-3 col-md-4
   	            col-sm-6 ">
   	  <div class="list preview add-new">
-	    <i class="glyphicon glyphicon-plus"></i>
+	    <form class="title-edit">
+	      <input type="text" placeholder="New List">
+	    </form>
           </div>
         </div>
 
@@ -91,6 +91,8 @@
 
 	      </li>
 
+
+
 	    </ul>
 	  </div>
         </div>
@@ -115,7 +117,7 @@
 
         <div class="col-lg-3 col-md-4
   	            col-sm-6 ">
-  	  <div class="list">
+  	  <div class="list add-new">
             <form class="title-edit">
 	      <input type="text" value="Chores">
 	    </form>
@@ -152,14 +154,10 @@
 		  <div class="del_butt_grey"><button type="submit"><i class="glyphicon glyphicon-remove"></i></button></div>
 		</form>
 	      </li>
-
-
-
-
-
 	    </ul>
 	  </div>
         </div>
+    </div>
       </div>
   </body>
 </html>
