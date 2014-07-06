@@ -1,8 +1,30 @@
 var taskApp = angular.module("taskApp", []);
 
+taskApp.service('Tasks', ['$rootScope', '$http', function($rootScope, $http) {
+    var service = {
+        groups: {},
 
+        addGroup: function(groupName) {},
+        removeGroup: function(groupId) {},
 
-taskApp.controller("taskCtrl", function taskCtrl($scope, $http) {
+        addTask: function(taskText, taskGroup, taskDueDate, subTasks) {},
+        removeTask: function(taskId) {}
+    };
+
+    $http({
+        method:'GET',
+        url: '/task/get/all'
+    }).success(function(data, status, headers, config) {
+        console.log("TASKS: ", data.data);
+    }).error(function(data, status, headers, config) {
+        console.log("ERROR: Could not retreive tasks.");
+    });
+
+    return service;
+}]);
+
+taskApp.controller('taskCtrl', ['Tasks', function taskCtrl($scope, $http, Tasks) {
+
     console.log("In taskCtrl");
     $scope.User = {};
     // TODO: Discuss data format and presentation
@@ -28,28 +50,5 @@ taskApp.controller("taskCtrl", function taskCtrl($scope, $http) {
               });
     };
 
-    $scope.UpdateFocusedGroup = function(group) {
-        $scope.FocusedGroup = group;
-    };
 
-    $scope.Addtask = function() {
-
-    };
-
-
-    $scope.DeleteTask = function() {
-
-    };
-
-
-    $scope.UpdateTask = function() {
-
-    };
-
-
-    $scope.ClearCompleted = function() {
-
-    };
-
-
-});
+}]);
