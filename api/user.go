@@ -13,10 +13,10 @@ type UserObject struct {
 	Hash      string
 }
 
-// api function for creating a new user
-// given the user's imformation create and add a user to the database.
-// if there is an error return the error.
-func CreateNewUser(email, first, last, hash, salt string) (err error) {
+// CreateNewUser is an api function for creating a new user.
+// Given the user's form information, add a user to the database.
+// Tjis functions does not do any validation, that should all be done by the handler.
+func CreateNewUser(email, first, last, hash, salt string) error {
 	stmt, err := DB.Prepare("INSERT INTO users (email, first_name, last_name, hash, salt) VALUES ($1, $2, $3, $4, $5);")
 	if err != nil {
 		fmt.Println("ERROR preparing statement: ", err)
@@ -31,9 +31,8 @@ func CreateNewUser(email, first, last, hash, salt string) (err error) {
 	return nil
 }
 
-// api function for getting a user from an email
-// given a user's email gets the user's information and returns it.
-// if there is an error return the error as well.
+// GetUser is a general api function for getting a user from an email.
+// Given a user's email gets the user's information and returns it as a UserObject.
 func GetUser(email string) (UserObject, error) {
 	stmt, err := DB.Prepare("SELECT user_id, first_name, last_name, email, hash, salt FROM users WHERE email = $1;")
 	if err != nil {
@@ -51,12 +50,12 @@ func GetUser(email string) (UserObject, error) {
 	return user, nil
 }
 
-// api function for updating a user
-func UpdateUser(userId int, fields map[string]string) (err error) {
+// UpdateUser is an api function for updating parts or all of a user's information.
+func UpdateUser(userId int, fields map[string]string) error {
 	return nil
 }
 
-// api function for deleting a user
-func DeleteUser(userId int) (err error) {
+// DeleteUser is an api function for deleting a user and all associated tasks/data.
+func DeleteUser(userId int) error {
 	return nil
 }
