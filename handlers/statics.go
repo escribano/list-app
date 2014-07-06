@@ -32,7 +32,7 @@ func GetListView(res http.ResponseWriter, req *http.Request) {
 
 // list-view.html page
 func DevList(res http.ResponseWriter, req *http.Request) {
-	body, _ := ioutil.ReadFile("templates/list-view-lite.html")
+	body, _ := ioutil.ReadFile("templates/list-view-v2.html")
 	fmt.Fprint(res, string(body))
 }
 
