@@ -40,7 +40,7 @@ func (form *CreateAccountForm) Validate() (err error) {
 		}
 	} else if form.Password == "" || form.Password != form.Password2 {
 		return FormValidationError{
-			"Passwords do not match!",
+			"Passwords do not match and cannot be blank!",
 		}
 	} else {
 		return nil
